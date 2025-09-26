@@ -1,0 +1,16 @@
+# Build files
+.o
+.out
+.a
+.dSYM/
+.gch
+.swp
+
+# Executables
+philo
+
+# OS / IDE junk
+.DS_Store
+.vscode/
+.idea/
+EOT
