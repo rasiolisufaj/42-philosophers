@@ -11,6 +11,7 @@ SRCS = $(SRC_DIR)/actions.c \
 	   $(SRC_DIR)/monitor.c \
 	   $(SRC_DIR)/threads.c \
 	   $(SRC_DIR)/utils.c \
+	   $(SRC_DIR)/parsing.c \
 
 OBJS = $(SRCS:.c=.o)
 
