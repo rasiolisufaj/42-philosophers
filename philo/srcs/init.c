@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/09/30 12:28:43 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/09/30 16:10:26 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	init_philos(t_philo *philos, t_program *program,
 	int	i;
 
 	i = 0;
-	while (i < ft_atoi(argv[1]))
+	while (i < philos->num_of_philos)
 	{
 		philos[i].id = i + 1;
 		philos[i].eating = 0;
@@ -64,7 +64,7 @@ void	init_philos(t_philo *philos, t_program *program,
 		philos[i].last_meal = get_current_time();
 		philos[i].dead = &program->dead_flag;
 		philos[i].r_fork = &forks[i];
-		philos[i].l_fork = &forks[(i + 1) % ft_atoi(argv[1])];
+		philos[i].l_fork = &forks[(i + 1) % philos->num_of_philos];
 		philos[i].write_lock = &program->write_lock;
 		philos[i].dead_lock = &program->dead_lock;
 		philos[i].meal_lock = &program->meal_lock;
@@ -81,12 +81,12 @@ void	init_program(t_program *program, t_philo *philos)
 	pthread_mutex_init(&program->write_lock, NULL);
 }
 
-void	init_forks(t_program *program, pthread_mutex_t *forks, char **argv)
+void	init_forks(t_program *program, pthread_mutex_t *forks)
 {
 	int	i;
 
 	i = 0;
-	while (i < ft_atoi(argv[1]))
+	while (i < program->philos->num_of_philos)
 	{
 		pthread_mutex_init(&forks[i], NULL);
 		i++;

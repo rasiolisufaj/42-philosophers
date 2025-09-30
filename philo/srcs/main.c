@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/09/30 12:49:38 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:44:31 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int argc, char **argv)
 	memset(philos, 0, sizeof(t_philo) * PHILO_MAX);
 	memset(forks, 0, sizeof(pthread_mutex_t) * PHILO_MAX);
 	init_program(&program, philos);
-	init_forks(&program, forks, argv);
+	init_forks(&program, forks);
+	init_input(philos, argv);
 	init_philos(philos, &program, forks, argv);
 	int num = ft_atoi(argv[1]);
     for (int i = 0; i < num; i++)

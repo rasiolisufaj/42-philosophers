@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/09/30 12:35:56 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:43:08 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ int					check_valid_args(char **argv);
 void				init_input(t_philo *philos, char **argv);
 void				init_philos(t_philo *philos, t_program *program,
 						pthread_mutex_t *forks, char **argv);
-void				init_forks(t_program *program, pthread_mutex_t *forks,
-						char **argv);
+void				init_forks(t_program *program, pthread_mutex_t *forks);
 void				init_program(t_program *program, t_philo *philos);
 
 // utils.c
