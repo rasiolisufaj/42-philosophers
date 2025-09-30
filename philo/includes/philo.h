@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/09/29 18:50:27 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:35:56 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define PHILO_MAX 300
+# define PHILO_MAX 200
 
 typedef struct s_philo
 {
@@ -52,9 +52,21 @@ typedef struct s_program
 	t_philo			*philos;
 }					t_program;
 
+// init.c
+int					check_valid_args(char **argv);
+void				init_input(t_philo *philos, char **argv);
+void				init_philos(t_philo *philos, t_program *program,
+						pthread_mutex_t *forks, char **argv);
+void				init_forks(t_program *program, pthread_mutex_t *forks,
+						char **argv);
+void				init_program(t_program *program, t_philo *philos);
+
 // utils.c
-int					ft_strlen(char *str);
-int					is_number(char c);
+int					is_number(char *str);
 int					ft_atoi(char *str);
+void				destroy_all(t_philo *philos, t_program *program,
+						pthread_mutex_t *forks);
+size_t				get_current_time(void);
+int					ft_usleep(size_t time_in_ms);
 
 #endif

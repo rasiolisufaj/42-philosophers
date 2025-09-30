@@ -6,30 +6,30 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/09/27 19:37:14 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:34:10 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	ft_strlen(char *str)
+int	is_number(char *str)
 {
 	size_t	i;
 
-	if (!str)
+	if (!str || !str[0])
 		return (0);
 	i = 0;
-	while (str[i])
+	if (str[i] == '+' || str[i] == '-')
 		i++;
-	return (i);
-}
-
-int	is_number(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
+	if (!str[i])
 		return (0);
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	ft_atoi(char *str)
@@ -50,10 +50,48 @@ int	ft_atoi(char *str)
 	}
 	else if (str[i] == '+')
 		i++;
-	while (is_number(str[i]))
+	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}
 	return (result * sign);
+}
+
+void	destroy_all(t_philo *philos, t_program *program,
+			pthread_mutex_t *forks)
+{
+	int	i;
+
+	if (philos)
+	{
+		i = 0;
+		while (i < philos->num_of_philos)
+		{
+			pthread_mutex_destroy(&forks[i]);
+			i++;
+		}
+		free(program->philos);
+	}
+	pthread_mutex_destroy(&program->dead_lock);
+	pthread_mutex_destroy(&program->meal_lock);
+	pthread_mutex_destroy(&program->write_lock);
+}
+
+int	ft_usleep(size_t time_in_ms)
+{
+	size_t	start_time;
+
+	start_time = get_current_time();
+	while ((get_current_time() - start_time) < time_in_ms)
+		usleep(500);
+	return (0);
+}
+
+size_t	get_current_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * (size_t)1000) + (time.tv_usec / 1000));
 }
