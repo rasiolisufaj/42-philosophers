@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/09/30 12:34:10 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:40:36 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,20 @@ int	ft_atoi(char *str)
 	return (result * sign);
 }
 
-void	destroy_all(t_philo *philos, t_program *program,
-			pthread_mutex_t *forks)
+void	destroy_all(t_program *program, pthread_mutex_t *forks, char *message)
 {
 	int	i;
 
-	if (philos)
+	if (message)
+		printf("Error: %s\n", message);
+	if (program->philos)
 	{
 		i = 0;
-		while (i < philos->num_of_philos)
+		while (i < program->philos->num_of_philos)
 		{
 			pthread_mutex_destroy(&forks[i]);
 			i++;
 		}
-		free(program->philos);
 	}
 	pthread_mutex_destroy(&program->dead_lock);
 	pthread_mutex_destroy(&program->meal_lock);

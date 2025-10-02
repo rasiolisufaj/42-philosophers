@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/09/30 16:10:26 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/10/02 14:28:01 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,14 @@ void	init_philos(t_philo *philos, t_program *program,
 		philos[i].start_time = get_current_time();
 		philos[i].last_meal = get_current_time();
 		philos[i].dead = &program->dead_flag;
-		philos[i].r_fork = &forks[i];
-		philos[i].l_fork = &forks[(i + 1) % philos->num_of_philos];
 		philos[i].write_lock = &program->write_lock;
 		philos[i].dead_lock = &program->dead_lock;
 		philos[i].meal_lock = &program->meal_lock;
+		philos[i].l_fork = &forks[i];
+		if (i == 0)
+			philos[i].r_fork = &forks[philos[i].num_of_philos];
+		else
+			philos[i].r_fork = &forks[i - 1];
 		i++;
 	}
 }

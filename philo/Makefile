@@ -1,46 +1,56 @@
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -pthread
 INCLUDES = -Iincludes
 
+# Source files
 SRC_DIR = srcs
-
 SRCS = $(SRC_DIR)/actions.c \
-	   $(SRC_DIR)/init.c \
-	   $(SRC_DIR)/main.c \
-	   $(SRC_DIR)/monitor.c \
-	   $(SRC_DIR)/threads.c \
-	   $(SRC_DIR)/utils.c
+	$(SRC_DIR)/init.c \
+	$(SRC_DIR)/main.c \
+	$(SRC_DIR)/monitor.c \
+	$(SRC_DIR)/threads.c \
+	$(SRC_DIR)/utils.c
 
-OBJS = $(SRCS:.c=.o)
+# Object files
+OBJ_DIR = obj
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Criterion test sources
 TEST_DIR = tests
 TEST_SRCS = $(TEST_DIR)/test_parsing.c
-TEST_OBJS = $(TEST_SRCS:.c=.o)
+TEST_OBJS = $(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJ_DIR)/%.o)
 TEST_BIN = unit_tests
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
-# Compile tests | MAKE SURE TO EXCLUDE MAIN.C FROM TESTS
-$(TEST_BIN): $(TEST_OBJS) $(OBJS)
-	$(CC) $(CFLAGS) $(TEST_OBJS) $(OBJS) -o $(TEST_BIN) -lcriterion
+$(NAME): $(OBJ_DIR) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $@
+
+# Compile source files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Compile tests
+$(TEST_BIN): $(OBJ_DIR) $(OBJS) $(TEST_OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS) -o $@ -lcriterion
+
+$(OBJ_DIR)/%.o: $(TEST_DIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 tests: $(TEST_BIN)
 	./$(TEST_BIN)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
 clean:
-	@rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
+	rm -f $(TEST_BIN)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re tests

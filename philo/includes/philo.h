@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/09/30 15:43:08 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/10/02 15:39:23 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,28 @@ void				init_philos(t_philo *philos, t_program *program,
 void				init_forks(t_program *program, pthread_mutex_t *forks);
 void				init_program(t_program *program, t_philo *philos);
 
+// threads.c
+int					dead_loop(t_philo *philo);
+void				*philo_routine(void *pointer);
+int					thread_create(t_program *program);
+
+// monitor.c
+void				print_message(char *str, t_philo *philo, int id);
+int					philosopher_dead(t_philo *philo, size_t time_to_die);
+int					check_if_dead(t_philo *philos);
+int					check_meals(t_philo *philos);
+void				*monitor(void *arg);
+
+// actions.c
+void				think(t_philo *philo);
+void				sleeping(t_philo *philo);
+void				eat(t_philo *philo);
+
 // utils.c
 int					is_number(char *str);
 int					ft_atoi(char *str);
-void				destroy_all(t_philo *philos, t_program *program,
-						pthread_mutex_t *forks);
+void				destroy_all(t_program *program, pthread_mutex_t *forks,
+						char *message);
 size_t				get_current_time(void);
 int					ft_usleep(size_t time_in_ms);
 
