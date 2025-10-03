@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/10/02 15:40:06 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/10/03 13:58:59 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,25 @@ int	thread_create(t_program *program)
 	int			i;
 
 	if (pthread_create(&monitor_thread, NULL, &monitor, program->philos) != 0)
-		destroy_all(program, program->forks, "Thread creation error");
+		return (destroy_all(program, program->forks, "Thread creation error"),
+			1);
 	i = 0;
 	while (i < program->philos[0].num_of_philos)
 	{
 		if (pthread_create(&program->philos[i].thread, NULL, &philo_routine,
 				&program->philos[i]) != 0)
-			destroy_all(program, program->forks, "Thread creation error");
+			return (destroy_all(program, program->forks,
+					"Thread creation error"), 1);
 		i++;
 	}
-	i = 0;
 	if (pthread_join(monitor_thread, NULL) != 0)
-		destroy_all(program, program->forks, "Thread join error");
+		return (destroy_all(program, program->forks, "Thread join error"), 1);
+	i = 0;
 	while (i < program->philos[0].num_of_philos)
 	{
 		if (pthread_join(program->philos[i].thread, NULL) != 0)
-			destroy_all(program, program->forks, "Thread creation error");
+			return (destroy_all(program, program->forks,
+					"Thread creation error"), 1);
 		i++;
 	}
 	return (0);
