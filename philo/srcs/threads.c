@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/10/03 13:58:59 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/10/03 15:10:42 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int	thread_create(t_program *program)
 	int			i;
 
 	if (pthread_create(&monitor_thread, NULL, &monitor, program->philos) != 0)
-		return (destroy_all(program, program->forks, "Thread creation error"),
-			1);
+		destroy_all(program, program->forks, "Thread creation error");
 	i = 0;
 	while (i < program->philos[0].num_of_philos)
 	{
