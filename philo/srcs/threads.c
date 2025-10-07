@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/10/03 15:10:42 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/10/07 18:24:32 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	dead_loop(t_philo *philo)
 	return (0);
 }
 
-// Thread routine
+/*
+Thread routine, even-numbered philos wait initially 
+to prevent dedalock
+*/
 
 void	*philo_routine(void *pointer)
 {
@@ -41,8 +44,10 @@ void	*philo_routine(void *pointer)
 		if (dead_loop(philo))
 			break ;
 		think(philo);
+		if (dead_loop(philo))
+			break ;
 	}
-	return (pointer);
+	return (NULL);
 }
 
 // Thread creation

@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/10/02 14:28:01 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/10/07 21:01:24 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	init_input(t_philo *philos, char **argv)
 		philos->num_times_to_eat = -1;
 }
 
-void	init_philos(t_philo *philos, t_program *program,
-			pthread_mutex_t *forks, char **argv)
+void	init_philos(t_philo *philos, t_program *program, pthread_mutex_t *forks,
+		char **argv)
 {
 	int	i;
 
