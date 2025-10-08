@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/10/02 15:40:36 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/10/08 12:46:11 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	destroy_all(t_program *program, pthread_mutex_t *forks, char *message)
 	pthread_mutex_destroy(&program->write_lock);
 }
 
+// Prevent CPU overuse
 int	ft_usleep(size_t time_in_ms)
 {
 	size_t	start_time;
@@ -88,6 +89,7 @@ int	ft_usleep(size_t time_in_ms)
 	return (0);
 }
 
+// Convert the time into milliseconds
 size_t	get_current_time(void)
 {
 	struct timeval	time;
