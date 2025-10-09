@@ -6,7 +6,7 @@
 /*   By: raisufaj <raisufaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 21:35:16 by raisufaj          #+#    #+#             */
-/*   Updated: 2025/10/07 18:24:32 by raisufaj         ###   ########.fr       */
+/*   Updated: 2025/10/09 13:21:40 by raisufaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ int	dead_loop(t_philo *philo)
 }
 
 /*
-Thread routine, even-numbered philos wait initially 
+Thread routine, even-numbered philos wait initially
 to prevent dedalock
+		ft_usleep(philo->time_to_eat / 2);
+
 */
 
 void	*philo_routine(void *pointer)
@@ -34,7 +36,7 @@ void	*philo_routine(void *pointer)
 
 	philo = (t_philo *)pointer;
 	if (philo->id % 2 == 0)
-		ft_usleep(philo->time_to_eat / 2);
+		ft_usleep(30);
 	while (!dead_loop(philo))
 	{
 		eat(philo);
