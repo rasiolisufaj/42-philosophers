@@ -1,16 +1,17 @@
 # Build files
-.o
-.out
-.a
-.dSYM/
-.gch
-.swp
+*.o
+*.a
+*.out
+*.gch
+*.dSYM/
+obj/
 
 # Executables
-philo
+/philo
+/philo_tsan
 
-# OS / IDE junk
+# Editor / OS junk
+*.swp
 .DS_Store
 .vscode/
 .idea/
-EOT

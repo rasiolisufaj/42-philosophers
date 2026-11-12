@@ -53,6 +53,8 @@ int	ft_atoi(char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result = result * 10 + (str[i] - '0');
+		if (result > 2147483647)
+			return (-1);
 		i++;
 	}
 	return (result * sign);
@@ -78,14 +80,24 @@ void	destroy_all(t_program *program, pthread_mutex_t *forks, char *message)
 	pthread_mutex_destroy(&program->write_lock);
 }
 
-// Prevent CPU overuse
+// Sleeps half the remaining time per step: ms-precise, but only ~log2(ms)
+// wakeups per call, so 200 sleeping threads don't flood the scheduler.
+// Steps are capped at 0.5s: macOS usleep() rejects values >= 1s.
 int	ft_usleep(size_t time_in_ms)
 {
-	size_t	start_time;
+	size_t	start;
+	size_t	elapsed;
 
-	start_time = get_current_time();
-	while ((get_current_time() - start_time) < time_in_ms)
-		usleep(500);
+	start = get_current_time();
+	elapsed = 0;
+	while (elapsed < time_in_ms)
+	{
+		if (time_in_ms - elapsed > 1000)
+			usleep(500000);
+		else
+			usleep((time_in_ms - elapsed) * 500);
+		elapsed = get_current_time() - start;
+	}
 	return (0);
 }
 

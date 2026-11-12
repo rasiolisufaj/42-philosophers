@@ -25,7 +25,6 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	int				eating;
 	int				meals_eaten;
 	size_t			last_meal;
 	size_t			time_to_die;
@@ -76,6 +75,7 @@ void				*monitor(void *arg);
 void				think(t_philo *philo);
 void				sleeping(t_philo *philo);
 void				eat(t_philo *philo);
+void				eat_alone(t_philo *philo);
 
 // utils.c
 int					is_number(char *str);

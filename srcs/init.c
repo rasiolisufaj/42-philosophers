@@ -57,23 +57,14 @@ void	init_philos(t_philo *philos, t_program *program, pthread_mutex_t *forks,
 	while (i < philos->num_of_philos)
 	{
 		philos[i].id = i + 1;
-		philos[i].eating = 0;
 		philos[i].meals_eaten = 0;
 		init_input(&philos[i], argv);
-		philos[i].start_time = get_current_time();
-		philos[i].last_meal = get_current_time();
 		philos[i].dead = &program->dead_flag;
 		philos[i].write_lock = &program->write_lock;
 		philos[i].dead_lock = &program->dead_lock;
 		philos[i].meal_lock = &program->meal_lock;
 		philos[i].l_fork = &forks[i];
 		philos[i].r_fork = &forks[(i + 1) % philos[i].num_of_philos];
-		// if (i == 0 && philos->num_of_philos == 1)
-		// 	philos[i].r_fork = &forks[(i + 1) % philos[i].num_of_philos];
-		// else if (i == 0)
-		// 	philos[i].r_fork = &forks[philos[i].num_of_philos];
-		// else
-		// 	philos[i].r_fork = &forks[i - 1];
 		i++;
 	}
 }
